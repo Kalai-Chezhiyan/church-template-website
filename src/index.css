@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Lora", serif;
+  --font-body: "Lato", sans-serif;
+  --color-primary: #0f172a;
+  --color-accent: #d4af37;
+  --color-warm-white: #fafaf9;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    background-color: var(--color-warm-white);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0%;
+}
