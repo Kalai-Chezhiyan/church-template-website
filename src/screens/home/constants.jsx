@@ -174,7 +174,7 @@ export const leadership = [
     name: "Pastor Michael Smith",
     role: "Lead Pastor",
     bio: "With over 20 years of ministry, Pastor Michael is passionate about bridging the gap between ancient scripture and modern living.",
-    image: "/assets/images/leadership1_new.png",
+    image: "/assets/images/pastor-michael.png",
   },
   {
     name: "Pastor Jane Smith",

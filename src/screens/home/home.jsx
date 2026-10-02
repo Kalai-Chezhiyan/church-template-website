@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "../../components/button/button";
 import { EventCard, ProgramCard } from "../../components/cards/cards";
 import Header from "../../components/header/header";
@@ -13,22 +14,43 @@ import JoinUs from "../../components/joinus/JoinUs";
 import Login from "../../components/login/Login";
 import { events, missionImage, programs, sermons, visitData, leadership, testimonials, givingFunds } from "./constants";
 
-export default function Home() {
+export default function Home({ setContactOpen, setHistoryOpen, setSelectedProgram }) {
   return (
     <div className="min-h-screen w-full">
-      <Header />
+      <Header setContactOpen={setContactOpen} />
       <div className="w-full overflow-x-hidden">
         <HeroSection />
-        <OurMission />
-        <Programs />
-        <Bible />
-        <UpcomingEvents />
-        <Listen sermons={sermons} />
-        <AboutUs />
-        <Leadership leadership={leadership} />
-        <Services />
+        <div id="our-mission">
+          <OurMission />
+        </div>
+        <div id="programs">
+          <Programs setSelectedProgram={setSelectedProgram} />
+        </div>
+        <div id="sermons">
+          <Bible />
+        </div>
+        <div id="events">
+          <UpcomingEvents />
+        </div>
+        <div id="listen">
+          <Listen sermons={sermons} />
+        </div>
+        <div id="about">
+          <AboutUs setHistoryOpen={setHistoryOpen} />
+        </div>
+        <div id="leadership">
+          <Leadership leadership={leadership} />
+        </div>
+        <div id="visit">
+          <Services />
+        </div>
+        <div id="giving-section">
+          <Giving givingFunds={givingFunds} />
+        </div>
         <JoinUs />
-        <Login />
+        <div id="login-section">
+          <Login />
+        </div>
         <Footer />
       </div>
     </div>
@@ -57,11 +79,17 @@ const OurMission = () => {
               className="border border-primary text-primary hover:bg-primary hover:text-white transition-colors"
               buttonName="LEARN MORE NOW"
               color="bg-white"
+              onClick={() => {
+                const aboutSection = document.getElementById("about");
+                if (aboutSection) {
+                  aboutSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
             />
           </div>
         </div>
 
-        <div className="flex-1 relative h-[500px] w-full">
+        <div className="flex-1 relative h-[300px] sm:h-[500px] w-full">
           {/* Asymmetric overlapping image grid */}
           <img
             src={missionImage[0]}
@@ -114,11 +142,23 @@ const HeroSection = () => {
               buttonName="JOIN NOW"
               color="bg-transparent text-white border border-white"
               className="hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+              onClick={() => {
+                const loginSection = document.getElementById("login-section");
+                if (loginSection) {
+                  loginSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
             />
             <Button
               className="border border-white border-solid hover:bg-white hover:text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
               buttonName="MAKE A DONATION"
               fontColor="text-white"
+              onClick={() => {
+                const givingSection = document.getElementById("giving-section");
+                if (givingSection) {
+                  givingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
             />
           </div>
         </div>
@@ -127,7 +167,7 @@ const HeroSection = () => {
   );
 };
 
-const Programs = () => {
+const Programs = ({ setSelectedProgram }) => {
   return (
     <section className="w-full py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto flex flex-col items-center">
@@ -146,7 +186,7 @@ const Programs = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
           {programs.map((program) => (
-            <ProgramCard data={program} />
+            <ProgramCard key={program.title} data={program} onClick={setSelectedProgram} />
           ))}
         </div>
       </div>
@@ -163,7 +203,7 @@ const Bible = () => {
         <div className="relative order-2 lg:order-1">
           <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-700">
             <img
-              className="w-full h-[500px] object-cover"
+              className="w-full h-[300px] md:h-[500px] object-cover"
               src="/assets/images/bible-modern.webp"
               alt="Modern Bible"
             />

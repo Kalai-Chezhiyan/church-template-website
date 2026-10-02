@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export default function AboutUs() {
+export default function AboutUs({ setHistoryOpen }) {
   return (
     <section className="w-full py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
@@ -13,7 +13,7 @@ export default function AboutUs() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             src="/assets/images/about-us.png"
             alt="About Our Community"
-            className="rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-[1.02]"
+            className="w-full h-auto rounded-3xl shadow-2xl transition-transform duration-500 hover:scale-[1.02]"
           />
         </div>
         <div className="flex-1">
@@ -29,7 +29,10 @@ export default function AboutUs() {
           <p className="text-gray-600 text-lg leading-relaxed font-body mb-8">
             Founded on the principles of faith, hope, and love, we strive to be a light in our city, serving the marginalized and uplifting the broken through the power of the Gospel.
           </p>
-          <button className="px-8 py-3 bg-accent text-primary font-bold rounded-full hover:bg-white transition-all duration-300 shadow-md">
+          <button
+            onClick={() => setHistoryOpen(true)}
+            className="px-8 py-3 bg-accent text-primary font-bold rounded-full hover:bg-white transition-all duration-300 shadow-md"
+          >
             Our History
           </button>
         </div>

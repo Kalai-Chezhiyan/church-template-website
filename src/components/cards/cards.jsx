@@ -80,7 +80,7 @@ export const ProgramCard = (props) => {
       <div className="overflow-hidden rounded-xl mb-6 relative">
         <img
           src={props.data.img}
-          className="h-48 w-48 object-cover transition-transform duration-700 group-hover:scale-125"
+          className="h-48 w-48 max-w-full h-auto object-cover transition-transform duration-700 group-hover:scale-125"
           alt={props.data.title}
         />
         <div className="absolute inset-0 bg-accent/0 group-hover:bg-accent/10 transition-colors duration-500" />
@@ -94,13 +94,13 @@ export const ProgramCard = (props) => {
       <p className="mb-6 text-sm text-gray-600 leading-relaxed line-clamp-4 px-2 transition-colors duration-300 group-hover:text-gray-800">
         {props.data.description}
       </p>
-      <a
-        href="#"
+      <button
+        onClick={() => props.onClick(props.data)}
         className="mt-auto text-sm font-semibold text-primary hover:text-accent transition-colors inline-flex items-center gap-1 group/link"
       >
         View more
         <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-      </a>
+      </button>
     </div>
   );
 };
