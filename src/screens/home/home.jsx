@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import Button from "../../components/button/button";
 import { EventCard, ProgramCard } from "../../components/cards/cards";
 import Header from "../../components/header/header";
@@ -14,17 +15,30 @@ import JoinUs from "../../components/joinus/JoinUs";
 import Login from "../../components/login/Login";
 import { events, missionImage, programs, sermons, visitData, leadership, testimonials, givingFunds } from "./constants";
 
-export default function Home({ setContactOpen, setHistoryOpen, setSelectedProgram }) {
+export default function Home() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [location]);
+
   return (
     <div className="min-h-screen w-full">
-      <Header setContactOpen={setContactOpen} />
+      <Header />
       <div className="w-full overflow-x-hidden">
         <HeroSection />
         <div id="our-mission">
           <OurMission />
         </div>
         <div id="programs">
-          <Programs setSelectedProgram={setSelectedProgram} />
+          <Programs />
         </div>
         <div id="sermons">
           <Bible />
@@ -36,7 +50,7 @@ export default function Home({ setContactOpen, setHistoryOpen, setSelectedProgra
           <Listen sermons={sermons} />
         </div>
         <div id="about">
-          <AboutUs setHistoryOpen={setHistoryOpen} />
+          <AboutUs />
         </div>
         <div id="leadership">
           <Leadership leadership={leadership} />
@@ -53,9 +67,12 @@ export default function Home({ setContactOpen, setHistoryOpen, setSelectedProgra
         </div>
         <Footer />
       </div>
+      <Outlet />
     </div>
   );
 }
+
+
 
 const OurMission = () => {
   return (

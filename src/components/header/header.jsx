@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Menu, User } from "../icons/Icons";
 
-export default function Header({ setContactOpen }) {
+export default function Header() {
+  const navigate = useNavigate();
   const [showAbout, setShowAbout] = useState(false);
   const [showAllPages, setShowAllPages] = useState(false);
   const [selectedPage, setSelectedPage] = useState(null);
@@ -79,10 +81,6 @@ export default function Header({ setContactOpen }) {
       e.preventDefault();
       setShowAbout(!showAbout);
       setShowAllPages(false);
-      // Close contact if it's open
-      if (setContactOpen) {
-        setContactOpen(false);
-      }
     } else if (value === "Donations") {
       e.preventDefault();
       const givingSection = document.getElementById("giving-section");
@@ -96,13 +94,9 @@ export default function Header({ setContactOpen }) {
       setShowAllPages(!showAllPages);
       setShowAbout(false);
       setSelectedPage(null);
-      // Close contact if it's open
-      if (setContactOpen) {
-        setContactOpen(false);
-      }
     } else if (value === "Contact Us") {
       e.preventDefault();
-      setContactOpen(true);
+      navigate('/contact');
       setShowAbout(false);
       setShowAllPages(false);
     }
@@ -239,7 +233,6 @@ export default function Header({ setContactOpen }) {
                 setShowUserMenu(!showUserMenu);
                 setShowAbout(false);
                 setShowAllPages(false);
-                if (setContactOpen) setContactOpen(false);
               }}
               className="p-2 rounded-full bg-white/10 text-white cursor-pointer hover:bg-accent hover:text-primary transition-all duration-300 border border-white/20"
             >
@@ -249,7 +242,7 @@ export default function Header({ setContactOpen }) {
               <div className="absolute top-12 right-0 bg-white text-primary p-4 rounded-lg shadow-2xl min-w-[200px] z-[60] border-t-4 border-accent animate-in fade-in slide-in-from-top-2 duration-300">
                 <div className="flex flex-col gap-2">
                   <a href="#" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md transition-colors">Login</a>
-                  <a href="#" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md transition-colors">Your Account</a>
+                  <a href="#" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md transition-colors">Household</a>
                   <a href="#" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md transition-colors">My Prayer Requests</a>
                   <a href="#" className="px-3 py-2 text-sm font-medium hover:bg-gray-100 rounded-md transition-colors">Giving History</a>
                   <div className="border-t my-1 border-gray-100" />

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Phone, Mail, Clock, Building, ArrowRight } from "../../components/icons/Icons";
 import Button from "../../components/button/button";
 
@@ -34,7 +35,8 @@ const churchInfo = {
   ],
 };
 
-export default function Contact({ onClose }) {
+export default function Contact() {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9, y: -10 }}
@@ -50,7 +52,7 @@ export default function Contact({ onClose }) {
           <h2 className="text-sm font-bold font-heading">Contact Us</h2>
         </div>
         <button
-          onClick={onClose}
+          onClick={() => navigate('/')}
           className="p-1 rounded-full hover:bg-white/20 transition-colors"
         >
           <span className="text-xs">✕</span>
@@ -121,7 +123,7 @@ export default function Contact({ onClose }) {
       {/* Footer */}
       <div className="p-3 bg-gray-50 border-t text-center">
         <button
-          onClick={onClose}
+          onClick={() => navigate('/')}
           className="w-full py-1.5 bg-primary text-white rounded-lg text-[10px] font-bold uppercase hover:bg-accent transition-colors"
         >
           Close

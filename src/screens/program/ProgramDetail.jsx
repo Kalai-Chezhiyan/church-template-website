@@ -1,9 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Mail, Phone } from "../../components/icons/Icons";
 import Button from "../../components/button/button";
+import { programs } from "../home/constants";
 
-export default function ProgramDetail({ program, onClose, openContact }) {
+export default function ProgramDetail() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const program = programs.find(p => p.title === id);
+
   if (!program) return null;
 
   return (
@@ -13,7 +19,7 @@ export default function ProgramDetail({ program, onClose, openContact }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
       className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
-      onClick={onClose}
+      onClick={() => navigate('/')}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -25,7 +31,7 @@ export default function ProgramDetail({ program, onClose, openContact }) {
       >
         {/* Close Button - Top Right */}
         <button
-          onClick={onClose}
+          onClick={() => navigate('/')}
           className="absolute top-6 right-6 z-10 p-2 rounded-full bg-white/20 hover:bg-white/40 text-primary transition-colors"
         >
           <span className="text-xl">✕</span>
@@ -73,13 +79,13 @@ export default function ProgramDetail({ program, onClose, openContact }) {
                   buttonName="GET INVOLVED"
                   color="bg-primary text-white"
                   className="px-8 py-2 text-xs"
-                  onClick={openContact}
+                  onClick={() => navigate('/contact')}
                 />
                 <Button
                   buttonName="CLOSE"
                   color="bg-white text-primary border border-gray-200"
                   className="px-8 py-2 text-xs"
-                  onClick={onClose}
+                  onClick={() => navigate('/')}
                 />
               </div>
             </motion.div>

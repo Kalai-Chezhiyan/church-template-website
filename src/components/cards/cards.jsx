@@ -1,4 +1,5 @@
 import { ArrowRight, Calendar, MapPin } from "../icons/Icons";
+import { useNavigate } from "react-router-dom";
 
 export const EventCard = (props) => {
   const dateStr = String(props.data.date);
@@ -75,6 +76,7 @@ export const EventCard = (props) => {
   );
 };
 export const ProgramCard = (props) => {
+  const navigate = useNavigate();
   return (
     <div className="group flex flex-col items-center text-center bg-white p-6 rounded-2xl shadow-sm border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 hover:border-accent/30">
       <div className="overflow-hidden rounded-xl mb-6 relative">
@@ -95,7 +97,7 @@ export const ProgramCard = (props) => {
         {props.data.description}
       </p>
       <button
-        onClick={() => props.onClick(props.data)}
+        onClick={() => navigate(`/program/${props.data.title}`)}
         className="mt-auto text-sm font-semibold text-primary hover:text-accent transition-colors inline-flex items-center gap-1 group/link"
       >
         View more

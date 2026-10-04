@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "../../components/icons/Icons";
 import Button from "../../components/button/button";
 
@@ -36,16 +37,15 @@ const historyMilestones = [
   },
 ];
 
-export default function History({ onClose }) {
-  if (!onClose) return null;
-
+export default function History() {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}
+      onClick={() => navigate('/')}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -59,7 +59,7 @@ export default function History({ onClose }) {
         <div className="p-6 bg-[#0f172a] text-white flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
             <button
-              onClick={onClose}
+              onClick={() => navigate('/')}
               className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function History({ onClose }) {
             buttonName="BACK TO ABOUT"
             color="bg-[#0f172a] text-white"
             className="px-8 py-2 text-xs"
-            onClick={onClose}
+            onClick={() => navigate('/')}
           />
         </div>
       </motion.div>
