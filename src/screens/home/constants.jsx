@@ -1,3 +1,102 @@
+export const youtubePlaylists = [
+  {
+    id: "PLJyVyGSmn1nU",
+    title: "தேவனுடைய சர்வாயுதவர்கம்",
+    count: 4,
+    videos: [
+      { id: "vid1_1", title: "Introduction to Spiritual Armour" },
+      { id: "vid1_2", title: "The Helmet of Salvation" },
+      { id: "vid1_3", title: "The Breastplate of Righteousness" },
+      { id: "vid1_4", title: "The Sword of the Spirit" },
+    ],
+  },
+  {
+    id: "PLGXF149opUurXUr-x8zN4hPeXll-e9xSE",
+    title: "Biblical Parenting | பிள்ளை வளர்ப்ப",
+    count: 8,
+    videos: [
+      { id: "vid2_1", title: "Foundation of Faith in Home" },
+      { id: "vid2_2", title: "Teaching Children to Pray" },
+      { id: "vid2_3", title: "Discipline with Love" },
+      { id: "vid2_4", title: "The Role of Parents" },
+      { id: "vid2_5", title: "Biblical Guidance" },
+      { id: "vid2_6", title: "Nurturing the Soul" },
+      { id: "vid2_7", title: "Family Worship" },
+      { id: "vid2_8", title: "Leading by Example" },
+    ],
+  },
+  {
+    id: "PLGXF149opUuqumyfTmAICJAAaL4thlkcq",
+    title: "Classic sermons",
+    count: 25,
+    videos: [
+      { id: "vid3_1", title: "The Eternal Promise" },
+      { id: "vid3_2", title: "Faith Over Fear" },
+      { id: "vid3_3", title: "Walking in Truth" },
+      // ... Placeholders for the remaining 22 videos
+      ...Array.from({ length: 22 }, (_, i) => ({ id: `vid3_${i + 4}`, title: `Classic Sermon Part ${i + 4}` })),
+    ],
+  },
+  {
+    id: "PLGXF149opUurzzObg60j1Thtvzv1BOoX9",
+    title: "Tamil worship by Ps.Dinesh kumar",
+    count: 1,
+    videos: [
+      { id: "vid4_1", title: "Powerful Tamil Worship Session" },
+    ],
+  },
+  {
+    id: "PLGXF149opUupVt18dod19jna4aQa9OGAq",
+    title: "Tamil Full sermon by Ps.Dinesh kumar",
+    count: 23,
+    videos: [
+      { id: "vid5_1", title: "Sermon on Divine Grace" },
+      { id: "vid5_2", title: "The Path of Righteousness" },
+      { id: "vid5_3", title: "Strength in Trials" },
+      // ... Placeholders for the remaining 20 videos
+      ...Array.from({ length: 20 }, (_, i) => ({ id: `vid5_${i + 4}`, title: `Full Sermon Part ${i + 4}` })),
+    ],
+  },
+  {
+    id: "PLGXF149opUuraOIGm1c6W_c4pcHiTBhph",
+    title: "Ask Ps Dinesh Kumar",
+    count: 15,
+    videos: [
+      { id: "vid6_1", title: "Q&A: Faith and Science" },
+      { id: "vid6_2", title: "Q&A: Family Struggles" },
+      { id: "vid6_3", title: "Q&A: Spiritual Growth" },
+      // ... Placeholders for the remaining 12 videos
+      ...Array.from({ length: 12 }, (_, i) => ({ id: `vid6_${i + 4}`, title: `Q&A Session Part ${i + 4}` })),
+    ],
+  },
+  {
+    id: "PLGXF149opUuoET2CKxM9xRO7pOe3ZbjMl",
+    title: "Devotional Short clips",
+    count: 7,
+    videos: [
+      { id: "vid7_1", title: "Morning Prayer Clip" },
+      { id: "vid7_2", title: "Faith Minute 1" },
+      { id: "vid7_3", title: "Faith Minute 2" },
+      { id: "vid7_4", title: "Daily Devotional 1" },
+      { id: "vid7_5", title: "Daily Devotional 2" },
+      { id: "vid7_6", title: "Daily Devotional 3" },
+      { id: "vid7_7", title: "Daily Devotional 4" },
+    ],
+  },
+  {
+    id: "PLGXF149opUupPvWhc3tTiMiflBfcxz4WV",
+    title: "Tamil Bible Study and Q & A",
+    count: 27,
+    videos: [
+      { id: "vid8_1", title: "Genesis Deep Dive" },
+      { id: "vid8_2", title: "Exodus Insights" },
+      { id: "vid8_3", title: "Leviticus Study" },
+      // ... Placeholders for the remaining 24 videos
+      ...Array.from({ length: 24 }, (_, i) => ({ id: `vid8_${i + 4}`, title: `Bible Study Part ${i + 4}` })),
+    ],
+  },
+];
+
 export const programs = [
   {
     img: "/assets/images/Education.webp",
@@ -74,7 +173,6 @@ export const events = [
       },
     ],
   },
-
   {
     title: "Catholic Social Teaching Seminar",
     location: "Worship Center",
@@ -107,43 +205,33 @@ export const missionImage = [
 
 export const sermons = [
   {
-    id: "s1",
-    title: "Finding Peace in Chaos",
-    speaker: "Pastor Michael Smith",
-    date: "September 20, 2026",
-    description: "A journey through the Psalms to discover tranquility in a restless world.",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    img: "/assets/images/finding-peace.png",
+    id: "S6NfN9vC0oY",
+    title: "The Power of Faith in Modern Life",
+    speaker: "Pr. Dinesh Kumar",
+    date: "Recent",
+    description: "Discover how to maintain a strong spiritual foundation in a rapidly changing world.",
+    youtubeId: "S6NfN9vC0oY",
+    img: "https://img.youtube.com/vi/S6NfN9vC0oY/maxresdefault.jpg",
     isFeatured: true,
   },
   {
-    id: "s2",
-    title: "The Power of Grace",
-    speaker: "Pastor Jane Smith",
-    date: "September 13, 2026",
-    description: "Understanding the unconditional love of God and how it transforms our identity.",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    img: "https://images.unsplash.com/photo-1507692049790-7bc3757737f6",
+    id: "lP7uW9vT6H0",
+    title: "Understanding Divine Grace",
+    speaker: "Pr. Dinesh Kumar",
+    date: "Recent",
+    description: "An exploration of God's unconditional love and how it transforms our identity.",
+    youtubeId: "lP7uW9vT6H0",
+    img: "https://img.youtube.com/vi/lP7uW9vT6H0/maxresdefault.jpg",
     isFeatured: false,
   },
   {
-    id: "s3",
-    title: "Walking by Faith",
-    speaker: "Pastor John Doe",
-    date: "September 6, 2026",
-    description: "Practical biblical steps to trust God's plan when the path ahead is unclear.",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-    img: "https://images.unsplash.com/photo-1515033617990-7bc3757737e3",
-    isFeatured: false,
-  },
-  {
-    id: "s4",
-    title: "Strength in Adversity",
-    speaker: "Pastor Sarah Williams",
-    date: "August 30, 2026",
-    description: "Exploring how challenges in life can become catalysts for spiritual growth and resilience.",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-    img: "https://images.unsplash.com/photo-1438032863028-b75155d0a1c8",
+    id: "mK8zP2qW1Xn",
+    title: "Walking Through the Valley",
+    speaker: "Pr. Dinesh Kumar",
+    date: "Recent",
+    description: "Finding hope and strength during the most challenging seasons of your life.",
+    youtubeId: "mK8zP2qW1Xn",
+    img: "https://img.youtube.com/vi/mK8zP2qW1Xn/maxresdefault.jpg",
     isFeatured: false,
   },
 ];

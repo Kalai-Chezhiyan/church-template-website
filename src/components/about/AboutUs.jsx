@@ -19,10 +19,10 @@ export default function AboutUs() {
           />
         </div>
         <div className="flex-1">
-          <span className="text-accent font-bold text-sm uppercase tracking-widest mb-4 block">
+          <span className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">
             Our Heart
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">
+          <h2 className="text-4xl md:text-7xl font-bold font-heading mb-6 md:mb-8 text-primary leading-[1.1]">
             About Our Community
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed font-body mb-6">

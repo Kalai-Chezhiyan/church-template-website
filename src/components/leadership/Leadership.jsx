@@ -5,13 +5,13 @@ export default function Leadership({ leadership }) {
     <section className="w-full py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-accent font-bold text-sm uppercase tracking-widest mb-4 block">
+          <span className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">
             Guidance & Vision
           </span>
           <h2 className="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">
             Our Leadership
           </h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600 font-body">
+          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-600 leading-relaxed font-body">
             Meet the shepherds who lead our congregation with faith, love, and a commitment to the Word.
           </p>
         </div>

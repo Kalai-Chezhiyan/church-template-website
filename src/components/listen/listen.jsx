@@ -1,166 +1,196 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { youtubePlaylists } from "../../screens/home/constants";
 
-export default function Listen({ sermons }) {
-  const [currentSermon, setCurrentSermon] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const audioRef = useRef(new Audio());
+export default function Listen() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedVideoId, setSelectedVideoId] = useState(null);
 
-  const featuredSermon = sermons.find((s) => s.isFeatured);
-  const otherSermons = sermons.filter((s) => !s.isFeatured);
+  // Debugging logs
+  console.log("Listen Component - isOpen:", isOpen);
+  console.log("Listen Component - youtubePlaylists length:", youtubePlaylists?.length);
 
-  useEffect(() => {
-    const audio = audioRef.current;
+  const [expandedPlaylistId, setExpandedPlaylistId] = useState(null);
 
-    const handleTimeUpdate = () => {
-      const current = audio.currentTime;
-      const duration = audio.duration;
-      if (duration) {
-        setProgress((current / duration) * 100);
-      }
-    };
-
-    const handleEnded = () => {
-      setIsPlaying(false);
-    };
-
-    audio.addEventListener("timeupdate", handleTimeUpdate);
-    audio.addEventListener("ended", handleEnded);
-
-    return () => {
-      audio.removeEventListener("timeupdate", handleTimeUpdate);
-      audio.removeEventListener("ended", handleEnded);
-    };
-  }, []);
-
-  const togglePlay = (sermon) => {
-    const audio = audioRef.current;
-
-    if (currentSermon?.id === sermon.id) {
-      if (isPlaying) {
-        audio.pause();
-        setIsPlaying(false);
-      } else {
-        audio.play();
-        setIsPlaying(true);
-      }
-    } else {
-      setCurrentSermon(sermon);
-      audio.src = sermon.audioUrl;
-      audio.play();
-      setIsPlaying(true);
-    }
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % youtubePlaylists.length);
+    setSelectedVideoId(null);
   };
 
-  const handleProgressChange = (e) => {
-    const newTime = (e.target.value / 100) * audioRef.current.duration;
-    audioRef.current.currentTime = newTime;
-    setProgress(e.target.value);
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + youtubePlaylists.length) % youtubePlaylists.length);
+    setSelectedVideoId(null);
   };
+
+  const currentPlaylist = youtubePlaylists[currentIndex];
 
   return (
     <section className="w-full py-24 px-6 bg-warmWhite overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="text-accent font-bold text-sm uppercase tracking-widest mb-4 block">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block"
+          >
             Spiritual Nourishment
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">
-            Listen to Sermons
-          </h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600 font-body">
-            Deepen your faith through our latest teachings and biblical reflections.
-          </p>
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-bold font-heading text-primary mb-6"
+          >
+            Listen & Watch
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="max-w-2xl mx-auto text-base md:text-lg text-gray-600 leading-relaxed font-body"
+          >
+            Deepen your faith through our latest teachings.
+            Use the arrows to browse through our different spiritual series.
+          </motion.p>
         </div>
 
-        {/* Featured Sermon */}
-        {featuredSermon && (
-          <div className="relative group mb-16 overflow-hidden rounded-3xl shadow-2xl transition-all duration-500 hover:scale-[1.01]">
-            <div className="absolute inset-0 bg-primary/80 z-10 group-hover:bg-primary/70 transition-all duration-500" />
-            <img
-              src={featuredSermon.img}
-              alt={featuredSermon.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="relative z-20 p-8 md:p-16 flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-1 text-center md:text-left">
-                <span className="text-accent font-bold uppercase text-xs tracking-tighter mb-2 block">
-                  Featured Teaching
-                </span>
-                <h3 className="text-3xl md:text-5xl font-bold font-heading text-white mb-4">
-                  {featuredSermon.title}
-                </h3>
-                <p className="text-white/80 text-lg mb-8 max-w-xl">
-                  {featuredSermon.description}
+        {/* Main Carousel Area */}
+        <div className="relative group max-w-5xl mx-auto">
+
+          {/* Left Arrow */}
+          <button
+            onClick={handlePrev}
+            className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white text-primary shadow-xl hover:bg-accent hover:text-white transition-all duration-300 hidden md:flex items-center justify-center border-2 border-gray-100 hover:border-accent"
+            aria-label="Previous Playlist"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+
+          {/* Video Content Wrapper */}
+          <div className="relative w-full aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+            <AnimatePresence mode="wait">
+                <motion.iframe
+                  key={selectedVideoId || currentPlaylist.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4 }}
+                  src={selectedVideoId
+                    ? `https://www.youtube.com/embed/${selectedVideoId}?playlist=${currentPlaylist.id}`
+                    : `https://www.youtube.com/embed/videoseries?list=${currentPlaylist.id}`
+                  }
+                  className="absolute inset-0 w-full h-full"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                />
+            </AnimatePresence>
+
+            {/* Playlist Label Overlay */}
+            <div className="absolute top-6 left-6 z-20">
+              <div className="bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-accent/20">
+                <p className="text-primary font-bold text-sm md:text-base">
+                  {currentPlaylist.title} <span className="text-gray-500 font-medium text-xs ml-1">({currentPlaylist.count} Videos)</span>
                 </p>
-                <button
-                  onClick={() => togglePlay(featuredSermon)}
-                  className="px-8 py-4 bg-accent text-primary font-bold rounded-full hover:bg-white transition-all duration-300 flex items-center gap-3 mx-auto md:mx-0 group/btn"
-                >
-                  {currentSermon?.id === featuredSermon.id && isPlaying ? (
-                    <span className="text-xl">⏸</span>
-                  ) : (
-                    <span className="text-xl">▶</span>
-                  )}
-                  <span>{currentSermon?.id === featuredSermon.id && isPlaying ? "Pause" : "Listen Now"}</span>
-                </button>
               </div>
             </div>
           </div>
-        )}
 
-        {/* Sermon List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {otherSermons.map((sermon) => (
-            <div
-              key={sermon.id}
-              className="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer border-l-4 border-transparent hover:border-accent"
-              onClick={() => togglePlay(sermon)}
-            >
-              <div className="flex justify-between items-start mb-4">
-                <div className="h-12 w-12 bg-accent/10 rounded-full flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-all duration-300">
-                  {currentSermon?.id === sermon.id && isPlaying ? "⏸" : "▶"}
-                </div>
-                <span className="text-xs font-medium text-gray-400">{sermon.date}</span>
-              </div>
-              <h4 className="text-xl font-bold font-heading text-primary mb-2 group-hover:text-accent transition-colors">
-                {sermon.title}
-              </h4>
-              <p className="text-sm text-gray-600 font-body line-clamp-2 mb-4">
-                {sermon.description}
-              </p>
-              <div className="text-xs font-bold text-primary/60 uppercase tracking-wider">
-                {sermon.speaker}
-              </div>
-            </div>
-          ))}
+          {/* Right Arrow */}
+          <button
+            onClick={handleNext}
+            className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-white text-primary shadow-xl hover:bg-accent hover:text-white transition-all duration-300 hidden md:flex items-center justify-center border-2 border-gray-100 hover:border-accent"
+            aria-label="Next Playlist"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
         </div>
 
-        {/* Global Sticky Player */}
-        {currentSermon && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-3xl bg-primary/90 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl z-50 border border-accent/20 flex items-center gap-4 transition-all duration-500 animate-in slide-in-from-bottom-10">
-            <img src={currentSermon.img} alt="" className="h-12 w-12 rounded-lg object-cover" />
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-center mb-1">
-                <h5 className="text-sm font-bold truncate">{currentSermon.title}</h5>
-                <span className="text-[10px] text-accent font-bold">{Math.floor(progress)}%</span>
-              </div>
-              <input
-                type="range"
-                className="w-full h-1 accent-accent bg-white/20 rounded-full cursor-pointer"
-                value={progress}
-                onChange={handleProgressChange}
-              />
-            </div>
-            <button
-              onClick={() => togglePlay(currentSermon)}
-              className="h-10 w-10 bg-accent text-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-            >
-              {isPlaying ? "⏸" : "▶"}
-            </button>
-          </div>
-        )}
+        {/* Control Section */}
+        <div className="mt-12 flex flex-col items-center gap-6">
+          {/* Single Playlist Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="px-8 py-3 bg-[#0f172a] text-white font-bold rounded-full shadow-lg hover:bg-accent hover:text-primary transition-all duration-300 flex items-center justify-center group"
+          >
+            <span className="uppercase tracking-widest text-xs">{isOpen ? "Close Playlists" : "Browse All Playlists"}</span>
+          </button>
+
+          {/* Expandable Playlist List */}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="w-full overflow-hidden"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                  {youtubePlaylists.map((playlist, index) => (
+                    <div key={playlist.id} className="flex flex-col gap-2">
+                      <button
+                        onClick={() => {
+                          setExpandedPlaylistId(expandedPlaylistId === playlist.id ? null : playlist.id);
+                          setCurrentIndex(index);
+                          setSelectedVideoId(null);
+                        }}
+                        className={`p-4 rounded-2xl text-left transition-all duration-300 border-2 text-sm font-medium
+                          ${currentIndex === index
+                            ? "bg-accent text-primary border-accent shadow-md scale-105"
+                            : "bg-white text-gray-600 border-gray-100 hover:border-accent hover:text-primary"
+                          }`}
+                      >
+                        <div className="flex justify-between items-center gap-3">
+                          <div className="flex items-center gap-3">
+                            <span className="text-accent font-bold">{index + 1}.</span>
+                            {playlist.title}
+                          </div>
+                          <span className="text-[10px] opacity-60 font-body">{playlist.count} videos</span>
+                        </div>
+                      </button>
+
+                      <AnimatePresence>
+                        {expandedPlaylistId === playlist.id && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="bg-white border border-gray-100 rounded-xl p-2 flex flex-col gap-1 shadow-inner">
+                              {playlist.videos.map((video, vIdx) => (
+                                <button
+                                  key={video.id}
+                                  onClick={() => {
+                                    // FIX: Instead of using placeholder ID, we use the playlist ID and tell YouTube to play this specific index
+                                    setSelectedVideoId(video.id);
+                                    setCurrentIndex(index);
+                                    setIsOpen(false);
+                                  }}
+                                  className={`p-2 text-xs text-left rounded-lg transition-all duration-200
+                                    ${selectedVideoId === video.id
+                                      ? "bg-accent text-primary font-bold"
+                                      : "text-gray-500 hover:bg-gray-50 hover:text-primary"
+                                    }`}
+                                >
+                                    {vIdx + 1}. {video.title}
+                                </button>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

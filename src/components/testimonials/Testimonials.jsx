@@ -5,13 +5,13 @@ export default function Testimonials({ testimonials }) {
     <section className="w-full py-24 px-6 bg-warmWhite">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-accent font-bold text-sm uppercase tracking-widest mb-4 block">
+          <span className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">
             Heartfelt Stories
           </span>
           <h2 className="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">
             Transformation
           </h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600 font-body">
+          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-600 leading-relaxed font-body">
             Real stories from people whose lives have been touched by the grace of God in our community.
           </p>
         </div>

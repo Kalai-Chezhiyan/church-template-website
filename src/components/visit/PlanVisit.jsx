@@ -8,13 +8,13 @@ export default function PlanVisit({ visitData }) {
     <section className="w-full py-24 px-6 bg-warmWhite">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <span className="text-accent font-bold text-sm uppercase tracking-widest mb-4 block">
+          <span className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">
             New Here?
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold font-heading text-primary mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold font-heading mb-6 md:mb-8 text-primary leading-[1.1]">
             Plan Your Visit
           </h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-600 font-body">
+          <p className="max-w-2xl mx-auto text-base md:text-lg text-gray-600 leading-relaxed font-body">
             We can't wait to welcome you home. Here is everything you need to know about visiting our community.
           </p>
         </div>

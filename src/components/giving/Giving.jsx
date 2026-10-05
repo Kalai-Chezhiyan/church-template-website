@@ -11,13 +11,13 @@ export default function Giving({ givingFunds }) {
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -ml-32 -mb-32" />
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <span className="text-accent font-bold text-sm uppercase tracking-widest mb-4 block">
+        <span className="text-accent font-bold text-xs uppercase tracking-[0.3em] mb-4 block">
           Partner with Us
         </span>
         <h2 className="text-4xl md:text-6xl font-bold font-heading mb-6">
           Sow Into the Kingdom
         </h2>
-        <p className="text-white/80 text-lg mb-12 max-w-2xl mx-auto font-body">
+        <p className="text-white/80 text-base md:text-lg mb-12 max-w-2xl mx-auto font-body leading-relaxed">
           Your generosity allows us to reach the lost, support the broken, and expand the light of the Gospel in our city and beyond.
         </p>
 

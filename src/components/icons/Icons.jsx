@@ -1,3 +1,25 @@
+export const ChurchLogo = ({ className = "w-6 h-6" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    {/* The Anchor: Represents the verticality of J and L */}
+    <path d="M12 5v14" />
+
+    {/* The Prism: A mirrored angle suggesting the M */}
+    <path d="M12 12l3 3 3-3" />
+
+    {/* The Embrace: A weighted arc suggesting the C and framing the mark */}
+    <path d="M18 7a6 6 0 1 0 0 10" />
+  </svg>
+);
+
 export const Phone = ({ className = "w-6 h-6" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +105,6 @@ export const ArrowLeft = ({ className = "w-6 h-6" }) => (
 );
 
 export const ArrowRight = ({ className = "w-6 h-6" }) => (
-
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
@@ -147,6 +168,22 @@ export const Menu = ({ className = "w-6 h-6" }) => (
     <line x1="4" x2="20" y1="12" y2="12"/>
     <line x1="4" x2="20" y1="6" y2="6"/>
     <line x1="4" x2="20" y1="18" y2="18"/>
+  </svg>
+);
+
+export const X = ({ className = "w-6 h-6" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M18 6L6 18"/>
+    <path d="M6 6l12 12"/>
   </svg>
 );
 

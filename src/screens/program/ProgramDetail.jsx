@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Mail, Phone } from "../../components/icons/Icons";
@@ -10,6 +10,15 @@ export default function ProgramDetail() {
   const navigate = useNavigate();
   const program = programs.find(p => p.title === id);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
+  if (!program) return null;
+
   if (!program) return null;
 
   return (
@@ -18,7 +27,7 @@ export default function ProgramDetail() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+      className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm animate-in fade-in duration-300"
       onClick={() => navigate('/')}
     >
       <motion.div
@@ -26,17 +35,9 @@ export default function ProgramDetail() {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        className="bg-warmWhite w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-[0_0_20px_rgba(212,175,55,0.3)] border-2 border-accent overflow-hidden flex flex-col relative"
+        className="bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl border-l-4 border-accent overflow-hidden flex flex-col relative"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Top Right */}
-        <button
-          onClick={() => navigate('/')}
-          className="absolute top-6 right-6 z-10 p-2 rounded-full bg-white/20 hover:bg-white/40 text-primary transition-colors"
-        >
-          <span className="text-xl">✕</span>
-        </button>
-
         <div className="flex flex-col md:flex-row h-full overflow-hidden">
           {/* Image Side */}
           <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
@@ -52,7 +53,7 @@ export default function ProgramDetail() {
           </div>
 
           {/* Content Side */}
-          <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto flex flex-col">
+          <div className="md:w-1/2 p-8 md:p-12 overflow-y-auto scrollbar-hide flex flex-col">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -68,7 +69,7 @@ export default function ProgramDetail() {
                 {program.title}
               </div>
 
-              <p className="text-white font-bold text-lg leading-relaxed font-body mb-8">
+              <p className="text-gray-600 font-body text-lg leading-relaxed mb-8">
                 {program.description}
                 <br /><br />
                 Our commitment to this initiative stems from a deep desire to serve those in need and to reflect the love of Christ in every action we take. We invite you to be a part of this journey of faith and service.
