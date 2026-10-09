@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X, ChurchLogo } from "../icons/Icons";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedPage, setSelectedPage] = useState(null);
   const [verse, setVerse] = useState(null);
@@ -110,6 +112,18 @@ export default function Header() {
     setTimeout(() => setVerse(null), 5000);
   };
 
+  const handleAuthAction = async (action) => {
+    if (action === 'login') {
+      navigate('/login');
+    } else if (action === 'logout') {
+      await logout();
+      navigate('/');
+    } else if (action === 'admin') {
+      navigate('/admin/dashboard');
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="w-full px-6 py-6 absolute top-0 left-0 z-50">
       <nav className="max-w-7xl mx-auto flex items-center justify-between">
@@ -185,7 +199,7 @@ export default function Header() {
                       onClick={() => handleNavClick(topic)}
                     >
                       <div className="text-lg font-medium uppercase tracking-wider text-primary group-hover:text-accent group-hover:drop-shadow-[0_0_8px_rgba(212,175,55,0.8)] transition-all duration-300 flex items-center gap-3 group-hover:translate-x-2">
-                        <span className="text-accent transition-transform duration-300 group-hover:scale-125">→</span>
+                        <span className="text-accent transition-transform duration-300 group-hover:scale-125">{"→"}</span>
                         {topic.title}
                       </div>
                       <p className="text-sm text-primary/60 mt-1 leading-relaxed font-body">
@@ -196,8 +210,32 @@ export default function Header() {
                 </div>
               </div>
 
-              <div className="border-t border-primary/10 pt-6 text-center">
-                <p className="text-xs text-primary/40 font-body italic">
+              {/* Dynamic Auth Section */}
+              <div className="border-t border-primary/10 pt-6 flex flex-col gap-4">
+                {currentUser ? (
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => handleAuthAction('admin')}
+                      className="w-full py-2 px-4 bg-accent text-primary font-bold rounded-lg hover:bg-accent/80 transition-colors text-sm uppercase tracking-wider"
+                    >
+                      Admin Dashboard
+                    </button>
+                    <button
+                      onClick={() => handleAuthAction('logout')}
+                      className="w-full py-2 px-4 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors text-sm"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => handleAuthAction('login')}
+                    className="w-full py-2 px-4 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors text-sm uppercase tracking-wider"
+                  >
+                    Login to Admin
+                  </button>
+                )}
+                <p className="text-center text-xs text-primary/40 font-body italic">
                   "Faith is the assurance of things hoped for"
                 </p>
               </div>

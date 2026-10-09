@@ -10,6 +10,7 @@ function App() {
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />}>
           <Route path="contact" element={<Contact />} />
           <Route path="history" element={<History />} />
@@ -22,4 +23,3 @@ function App() {
 }
 
 export default App;
-

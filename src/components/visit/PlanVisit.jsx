@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import Button from "../button/button";
+import { useFirestoreDocument } from "../../hooks/useFirestoreData";
+import { visitData as fallbackVisitData } from "../../screens/home/constants";
 
-export default function PlanVisit({ visitData }) {
+export default function PlanVisit() {
   const [openIndex, setOpenIndex] = useState(null);
+  const { data: visitData, loading } = useFirestoreDocument("general_settings", "info", fallbackVisitData);
+
+  if (loading) {
+    return (
+      <div className="w-full py-24 px-6 flex justify-center items-center">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <section className="w-full py-24 px-6 bg-warmWhite">
@@ -24,7 +35,7 @@ export default function PlanVisit({ visitData }) {
           <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
             <h3 className="text-2xl font-bold font-heading text-primary mb-6">Service Times</h3>
             <div className="space-y-4">
-              {visitData.serviceTimes.map((item, idx) => (
+              {visitData?.serviceTimes?.map((item, idx) => (
                 <div key={idx} className="flex justify-between items-center p-4 rounded-xl bg-warmWhite border-l-4 border-accent">
                   <div>
                     <p className="font-bold text-primary">{item.day}</p>
@@ -36,7 +47,7 @@ export default function PlanVisit({ visitData }) {
             </div>
             <div className="mt-8 p-6 bg-primary text-white rounded-2xl">
               <h4 className="font-bold mb-2">Our Location</h4>
-              <p className="text-sm opacity-80">123 Divine Way, Faith City, FC 12345</p>
+              <p className="text-sm opacity-80">{visitData?.address || "123 Divine Way, Faith City, FC 12345"}</p>
               <Button
                 buttonName="Get Directions"
                 color="bg-accent text-primary"
@@ -49,7 +60,7 @@ export default function PlanVisit({ visitData }) {
           <div>
             <h3 className="text-2xl font-bold font-heading text-primary mb-6">What to Expect</h3>
             <div className="space-y-4">
-              {visitData.faqs.map((faq, idx) => (
+              {visitData?.faqs?.map((faq, idx) => (
                 <div key={idx} className="border border-gray-200 rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:border-accent/50">
                   <button
                     onClick={() => setOpenIndex(openIndex === idx ? null : idx)}

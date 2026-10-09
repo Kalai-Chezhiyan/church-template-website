@@ -1,7 +1,28 @@
 import React from "react";
+import { useFirestoreData } from "../../hooks/useFirestoreData";
 import { Heart, HandHelping, Sparkles } from "../icons/Icons";
 
 export default function Services() {
+  const { data: services, loading } = useFirestoreData("services", [
+    { title: "Prayer Support", desc: "Dedicated prayer teams available 24/7 for your needs.", icon: "Heart" },
+    { title: "Counseling", desc: "Biblical guidance and support for mental and emotional health.", icon: "HandHelping" },
+    { title: "Youth Mentorship", desc: "Guiding the next generation to walk boldly in faith.", icon: "Sparkles" },
+  ]);
+
+  const iconMap = {
+    Heart: <Heart className="w-10 h-10 text-accent" />,
+    HandHelping: <HandHelping className="w-10 h-10 text-accent" />,
+    Sparkles: <Sparkles className="w-10 h-10 text-accent" />,
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full py-24 px-6 flex justify-center items-center">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <section className="w-full py-24 px-6 bg-warmWhite">
       <div className="max-w-6xl mx-auto text-center mb-16">
@@ -17,14 +38,10 @@ export default function Services() {
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
-          { title: "Prayer Support", desc: "Dedicated prayer teams available 24/7 for your needs.", icon: <Heart className="w-10 h-10 text-accent" /> },
-          { title: "Counseling", desc: "Biblical guidance and support for mental and emotional health.", icon: <HandHelping className="w-10 h-10 text-accent" /> },
-          { title: "Youth Mentorship", desc: "Guiding the next generation to walk boldly in faith.", icon: <Sparkles className="w-10 h-10 text-accent" /> },
-        ].map((service, idx) => (
+        {services.map((service, idx) => (
           <div key={idx} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group text-center">
             <div className="flex justify-center mb-6 group-hover:scale-125 transition-transform duration-300">
-              {service.icon}
+              {iconMap[service.icon] || <Sparkles className="w-10 h-10 text-accent" />}
             </div>
             <h3 className="text-2xl font-bold font-heading text-primary mb-3">{service.title}</h3>
             <p className="text-gray-600 font-body leading-relaxed">{service.desc}</p>

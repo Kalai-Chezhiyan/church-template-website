@@ -1,6 +1,18 @@
 import React from "react";
+import { useFirestoreData } from "../../hooks/useFirestoreData";
+import { testimonials as fallbackTestimonials } from "../../screens/home/constants";
 
-export default function Testimonials({ testimonials }) {
+export default function Testimonials() {
+  const { data: testimonials, loading } = useFirestoreData("testimonials", fallbackTestimonials);
+
+  if (loading) {
+    return (
+      <div className="w-full py-24 px-6 flex justify-center items-center">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <section className="w-full py-24 px-6 bg-warmWhite">
       <div className="max-w-6xl mx-auto">

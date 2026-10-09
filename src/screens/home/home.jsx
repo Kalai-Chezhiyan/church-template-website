@@ -13,11 +13,18 @@ import Footer from "../../components/footer/Footer";
 import AboutUs from "../../components/about/AboutUs";
 import Services from "../../components/services/Services";
 import JoinUs from "../../components/joinus/JoinUs";
+import { useFirestoreData, useFirestoreDocument } from "../../hooks/useFirestoreData";
 import { events, missionImage, programs, sermons, visitData, leadership, testimonials, givingFunds } from "./constants";
 
 export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { data: fbPrograms, loading: loadingPrograms } = useFirestoreData("programs", programs);
+  const { data: fbSermons, loading: loadingSermons } = useFirestoreData("programs", sermons); // Note: filtered by type in component
+  const { data: fbEvents, loading: loadingEvents } = useFirestoreData("programs", events); // Note: filtered by type in component
+  const { data: fbGivingFunds } = useFirestoreData("giving_funds", givingFunds);
+  const { data: fbMissionImage } = useFirestoreDocument("general_settings", "home_assets", missionImage);
 
   useEffect(() => {
     if (location.hash) {
@@ -35,31 +42,31 @@ export default function Home() {
       <div className="w-full overflow-x-hidden">
         <HeroSection />
         <div id="our-mission">
-          <OurMission />
+          <OurMission images={fbMissionImage} />
         </div>
         <div id="programs">
-          <Programs />
+          <Programs items={fbPrograms} loading={loadingPrograms} />
         </div>
         <div id="sermons">
           <Bible />
         </div>
         <div id="events">
-          <UpcomingEvents />
+          <UpcomingEvents items={fbEvents} loading={loadingEvents} />
         </div>
         <div id="listen">
-          <Listen sermons={sermons} />
+          <Listen sermons={fbSermons} />
         </div>
         <div id="about">
           <AboutUs />
         </div>
         <div id="leadership">
-          <Leadership leadership={leadership} />
+          <Leadership />
         </div>
         <div id="visit">
           <Services />
         </div>
         <div id="giving-section">
-          <Giving givingFunds={givingFunds} />
+          <Giving givingFunds={fbGivingFunds} />
         </div>
         <div id="join-us">
           <JoinUs />
@@ -71,8 +78,8 @@ export default function Home() {
   );
 }
 
-
-const OurMission = () => {
+const OurMission = ({ images }) => {
+  const missionImages = images || [];
   return (
     <section className="w-full py-20 md:py-32 px-6 bg-warmWhite overflow-hidden relative">
       {/* Subtle Background Decor */}
@@ -149,7 +156,7 @@ const OurMission = () => {
             className="absolute top-0 left-0 w-2/3 aspect-square md:w-2/3 md:h-2/3 z-10"
           >
             <img
-              src={missionImage[0]}
+              src={missionImages[0]}
               className="w-full h-full object-cover rounded-2xl md:rounded-3xl shadow-2xl transition-transform duration-700 hover:scale-105"
               alt="Mission 1"
             />
@@ -163,7 +170,7 @@ const OurMission = () => {
             className="absolute bottom-0 right-0 w-2/3 aspect-square md:w-2/3 md:h-2/3 z-20"
           >
             <img
-              src={missionImage[1]}
+              src={missionImages[1]}
               className="w-full h-full object-cover rounded-2xl md:rounded-3xl shadow-2xl transition-transform duration-700 hover:scale-105"
               alt="Mission 2"
             />
@@ -177,7 +184,7 @@ const OurMission = () => {
             className="absolute top-1/3 right-2 md:right-8 w-1/2 aspect-square md:w-1/3 md:h-1/3 z-30"
           >
             <img
-              src={missionImage[2]}
+              src={missionImages[2]}
               className="w-full h-full object-cover rounded-2xl md:rounded-3xl shadow-2xl transition-transform duration-700 hover:scale-105"
               alt="Mission 3"
             />
@@ -248,7 +255,17 @@ const HeroSection = () => {
   );
 };
 
-const Programs = ({ setSelectedProgram }) => {
+const Programs = ({ items, loading }) => {
+  const displayItems = items?.filter(p => p.type === 'Program') || [];
+
+  if (loading) {
+    return (
+      <div className="w-full py-20 md:py-24 px-6 flex justify-center items-center bg-white">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <section className="w-full py-20 md:py-24 px-6 bg-white overflow-hidden relative">
       <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-accent/5 rounded-full blur-3xl -z-10" />
@@ -273,15 +290,15 @@ const Programs = ({ setSelectedProgram }) => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 w-full">
-          {programs.map((program, index) => (
+          {displayItems.map((program, index) => (
             <motion.div
-              key={program.title}
+              key={program.title || index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
             >
-              <ProgramCard data={program} onClick={setSelectedProgram} />
+              <ProgramCard data={program} />
             </motion.div>
           ))}
         </div>
@@ -372,7 +389,17 @@ const Bible = () => {
   );
 };
 
-const UpcomingEvents = () => {
+const UpcomingEvents = ({ items, loading }) => {
+  const displayItems = items?.filter(p => p.type === 'Event') || [];
+
+  if (loading) {
+    return (
+      <div className="w-full py-20 md:py-32 px-6 flex justify-center items-center bg-warmWhite">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <section className="relative w-full py-20 md:py-32 px-6 bg-warmWhite overflow-hidden">
       {/* Decorative background elements */}
@@ -394,9 +421,9 @@ const UpcomingEvents = () => {
           </h2>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 justify-items-center">
-          {events.map((event, index) => (
+          {displayItems.map((event, index) => (
             <motion.div
-              key={index}
+              key={event.title || index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

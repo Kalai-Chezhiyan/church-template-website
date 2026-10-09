@@ -186,11 +186,11 @@ export const events = [
       {
         time: "01:00 pm",
         img: "https://images.unsplash.com/photo-1509062522246-3755977927a7?auto=format&fit=crop&q=80&w=800",
-        desc: "Sharing of Best Practices",
+        desc: "Importance of Youth Ministry in the Church",
       },
       {
         time: "02:00 pm",
-        img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800",
+        img: "https://images.unsplash.com/photo-1529070757047-8a5431644308?auto=format&fit=crop&q=80&w=800",
         desc: "Importance of Youth Ministry in the Church",
       },
     ],
@@ -221,7 +221,7 @@ export const sermons = [
     date: "Recent",
     description: "An exploration of God's unconditional love and how it transforms our identity.",
     youtubeId: "lP7uW9vT6H0",
-    img: "https://img.youtube.com/vi/lP7uW9vT6H0/maxresdefault.jpg",
+    img: "https://img.youtube.com/vi/S6NfN9vC0oY/maxresdefault.jpg",
     isFeatured: false,
   },
   {
@@ -246,8 +246,7 @@ export const visitData = {
       question: "What should I wear?",
       answer: "Come as you are! While some prefer traditional attire, most of our congregation wears casual or business-casual clothing."
     },
-    {
-      question: "Where do I park?",
+    { idea: "Where do I park?",
       answer: "We have a spacious parking lot available. Look for the 'Guest Parking' signs near the main entrance."
     },
     {
@@ -304,3 +303,35 @@ export const givingFunds = [
   { id: 'missions', label: 'Missions', description: 'Funding global outreach and relief.' },
   { id: 'building', label: 'Building Fund', description: 'Investing in our future sacred spaces.' },
 ];
+
+export const fallbackStaff = [
+  {
+    name: "Rev. Samuel Thorne",
+    role: "Lead Pastor",
+    phone: "+1 (555) 123-4567",
+    email: "samuel.thorne@church.org",
+  },
+  {
+    name: "Sarah Jenkins",
+    role: "Youth Minister",
+    phone: "+1 (555) 234-5678",
+    email: "sarah.jenkins@church.org",
+  },
+  {
+    name: "David Miller",
+    role: "Community Outreach",
+    phone: "+1 (555) 345-6789",
+    email: "david.miller@church.org",
+  },
+];
+
+export const fallbackChurchInfo = {
+  address: "123 Faith Lane, Grace City, GC 45678",
+  generalEmail: "info@church.org",
+  generalPhone: "+1 (555) 000-1111",
+  serviceHours: [
+    { day: "Sunday", time: "9:00 AM - 12:00 PM" },
+    { day: "Wednesday", time: "6:30 PM - 8:00 PM" },
+    { day: "Friday", time: "7:00 PM - 9:00 PM" },
+  ],
+};

@@ -3,12 +3,14 @@ import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Mail, Phone } from "../../components/icons/Icons";
 import Button from "../../components/button/button";
-import { programs } from "../home/constants";
+import { useFirestoreDocument } from "../../hooks/useFirestoreData";
+import { programs as fallbackPrograms } from "../home/constants";
 
 export default function ProgramDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const program = programs.find(p => p.title === id);
+
+  const { data: program, loading } = useFirestoreDocument("programs", id, fallbackPrograms.find(p => p.title === id));
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -17,9 +19,30 @@ export default function ProgramDetail() {
     };
   }, []);
 
-  if (!program) return null;
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
-  if (!program) return null;
+  if (!program) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm"
+        onClick={() => navigate('/')}
+      >
+        <div className="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-sm">
+          <h2 className="text-2xl font-bold text-primary mb-4">Program Not Found</h2>
+          <p className="text-gray-600 mb-6">We couldn't find the program you're looking for.</p>
+          <Button buttonName="GO BACK" color="bg-primary text-white" onClick={() => navigate('/')} />
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
